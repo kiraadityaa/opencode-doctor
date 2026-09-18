@@ -4,8 +4,6 @@
 set -u
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
-total_pass=0
-total_fail=0
 failed_cases=()
 
 for case in "$ROOT"/test/cases/*.sh; do
@@ -19,7 +17,6 @@ for case in "$ROOT"/test/cases/*.sh; do
     printf '%s\n' "$out"
     failed_cases+=("$name")
   fi
-  total_fail=$((total_fail + rc))
 done
 
 echo
