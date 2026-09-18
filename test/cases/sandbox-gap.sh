@@ -3,6 +3,7 @@
 # g07 WARN; --dry-run writes nothing; --fix injects the env block + backup and
 # the re-run is green.
 set -u
+# shellcheck disable=SC1091
 source "$(dirname "${BASH_SOURCE[0]}")/../lib.sh"
 
 fixture_home sandbox-gap

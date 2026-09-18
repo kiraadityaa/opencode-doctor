@@ -2,6 +2,7 @@
 # no-perm-default fixture: g03 FAIL; --dry-run must change nothing; --fix must
 # insert the "*": "ask" default, leave a .doctor.bak.* backup, and stay valid.
 set -u
+# shellcheck disable=SC1091
 source "$(dirname "${BASH_SOURCE[0]}")/../lib.sh"
 
 fixture_home no-perm-default

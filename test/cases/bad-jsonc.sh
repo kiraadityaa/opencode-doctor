@@ -2,6 +2,7 @@
 # bad-jsonc fixture: the global config is unparseable → g01 must FAIL and the
 # doctor must exit 2 without crashing.
 set -u
+# shellcheck disable=SC1091
 source "$(dirname "${BASH_SOURCE[0]}")/../lib.sh"
 
 fixture_home bad-jsonc
