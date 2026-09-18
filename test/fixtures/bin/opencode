@@ -1,0 +1,95 @@
+#!/usr/bin/env bash
+# Fake `opencode` used ONLY by the test-suite. It answers the subcommands the
+# doctor relies on, driven entirely by the fixture's config file, so CI stays
+# hermetic: no real opencode install is required and nothing network-dependent
+# is queried. It evaluates against $XDG_CONFIG_HOME (or $HOME/.config).
+set -u
+
+CFG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/opencode"
+CFG=""
+for c in "$CFG_DIR/opencode.json" "$CFG_DIR/opencode.jsonc"; do
+  [ -f "$c" ] && CFG="$c" && break
+done
+
+strip_jsonc() {
+  python3 - "$1" <<'PY'
+import sys
+src = open(sys.argv[1]).read()
+out = []
+i, n = 0, len(src)
+in_str = False
+while i < n:
+    c = src[i]
+    if in_str:
+        out.append(c)
+        if c == "\\" and i + 1 < n:
+            out.append(src[i + 1]); i += 2; continue
+        if c == '"':
+            in_str = False
+        i += 1; continue
+    if c == '"':
+        in_str = True; out.append(c); i += 1; continue
+    if c == "/" and i + 1 < n and src[i + 1] == "/":
+        j = src.find("\n", i); out.append("\n"); i = (n if j < 0 else j + 1); continue
+    if c == "/" and i + 1 < n and src[i + 1] == "*":
+        j = src.find("*/", i + 2); i = (n if j < 0 else j + 3); continue
+    out.append(c); i += 1
+sys.stdout.write("".join(out))
+PY
+}
+
+load_config() {
+  [ -n "$CFG" ] || return 1
+  parsed="$(strip_jsonc "$CFG")"
+  printf '%s' "$parsed"
+}
+
+cmd="${1:-}"
+case "$cmd" in
+  debug)
+    # opencode debug config → merged effective config as JSON (exits 1 when bad)
+    json="$(load_config)" || { echo "no config found" >&2; exit 1; }
+    if ! printf '%s' "$json" | python3 -c 'import json,sys; json.load(sys.stdin)' 2>/dev/null; then
+      echo "invalid config: failed to parse" >&2
+      exit 1
+    fi
+    printf '%s' "$json" | python3 -m json.tool
+    ;;
+  models)
+    # list of "provider/model" lines (only the configured defaults, faithful echo)
+    json="$(load_config)" || exit 1
+    printf '%s' "$json" | python3 -c '
+import json, sys
+d = json.load(sys.stdin)
+for k in ("model", "small_model"):
+    v = d.get(k)
+    if v and "/" in v:
+        print(v)
+'
+    ;;
+  mcp)
+    # opencode mcp list → colored "✓ name connected" lines for every enabled
+    # server except those marked "x-doctor-test": "offline" in the fixture.
+    json="$(load_config)" || exit 1
+    printf '%s' "$json" | python3 -c '
+import json, sys
+d = json.load(sys.stdin)
+servers = d.get("mcp", {}) or {}
+names = [n for n, s in servers.items() if s.get("enabled", True)]
+offline = [n for n, s in servers.items() if s.get("x-doctor-test") == "offline"]
+for n in names:
+    if n in offline:
+        print(f"  \u2717 {n} disconnected")
+    else:
+        print(f"  \u2713 {n} connected")
+print(f"\u2514  {len(names)} server(s)")
+'
+    ;;
+  --version)
+    echo "1.0.0"
+    ;;
+  *)
+    echo "fake opencode: unknown command: $cmd" >&2
+    exit 127
+    ;;
+esac

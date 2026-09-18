@@ -1,0 +1,18 @@
+{
+  "model": "anthropic/claude-3.5-sonnet",
+  "small_model": "anthropic/claude-3.5-haiku",
+  // Fixture: agent-browser declared but no browser-sandbox env.
+  // permission.bash is present (with catch-all) so ONLY g07 flags.
+  "permission": {
+    "bash": {
+      "*": "ask"
+    }
+  },
+  "mcp": {
+    "agent-browser": {
+      "type": "local",
+      "command": ["agent-browser", "mcp", "--tools", "core"],
+      "enabled": true
+    }
+  }
+}

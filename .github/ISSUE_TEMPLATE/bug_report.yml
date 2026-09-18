@@ -1,0 +1,53 @@
+name: Bug report
+description: File a bug report
+title: "bug: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting. Fill in the details below — the more precise, the faster we can fix it.
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: Output of `bash doctor.sh --version`
+      placeholder: "0.1.0"
+    validations:
+      required: true
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating system
+      options:
+        - Linux
+        - macOS
+        - WSL / Windows
+        - Container / Docker
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: opencode-version
+    attributes:
+      label: opencode version
+      description: Output of `opencode --version`
+      placeholder: "v1.18.31"
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: Paste the failing command and its output
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect?
+    validations:
+      required: true
+  - type: textarea
+    id: config
+    attributes:
+      label: Redacted config
+      description: Post the relevant part of your opencode config with secrets removed.

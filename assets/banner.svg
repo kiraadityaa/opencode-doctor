@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="400" viewBox="0 0 1200 400" role="img" aria-labelledby="title desc">
+  <title id="title">opencode-doctor</title>
+  <desc id="desc">Health checks for your OpenCode setup — diagnose and repair.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b0e14"/>
+      <stop offset="0.55" stop-color="#140f12"/>
+      <stop offset="1" stop-color="#0b0e14"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#f472b6"/>
+      <stop offset="1" stop-color="#38bdf8"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="400" fill="url(#bg)"/>
+  <circle cx="1188" cy="12" r="240" fill="none" stroke="#33202c" stroke-width="1.5"/>
+  <circle cx="12" cy="388" r="200" fill="none" stroke="#1b2233" stroke-width="1.5"/>
+  <g stroke="#1e2735" stroke-width="1.5" opacity="0.7">
+    <path d="M0 96 H1200"/><path d="M0 128 H1200"/><path d="M0 160 H1200"/>
+    <path d="M0 240 H1200"/><path d="M0 272 H1200"/><path d="M0 304 H1200"/>
+  </g>
+  <text x="600" y="132" text-anchor="middle" font-family="SFMono-Regular, ui-monospace, Consolas, monospace" font-size="16" letter-spacing="6" fill="#8b93a7">OPENCODE · HEALTH CHECKS</text>
+  <text x="600" y="196" text-anchor="middle" font-family="Inter, system-ui, -apple-system, sans-serif" font-size="60" font-weight="700" fill="#f2f5fa">⌘ opencode-doctor</text>
+  <text x="600" y="244" text-anchor="middle" font-family="Inter, system-ui, -apple-system, sans-serif" font-size="22" fill="#aeb6c6">Diagnose and safely repair your OpenCode setup.</text>
+  <g font-family="SFMono-Regular, ui-monospace, Consolas, monospace" font-size="15" fill="#d7dce6">
+    <rect x="250" y="282" width="200" height="40" rx="20" fill="none" stroke="#592c4a" stroke-width="1.5"/>
+    <text x="350" y="307" text-anchor="middle" fill="#f7a8d0">global</text>
+    <rect x="500" y="282" width="200" height="40" rx="20" fill="none" stroke="#2a3346" stroke-width="1.5"/>
+    <text x="600" y="307" text-anchor="middle" fill="#8fd8f7">project</text>
+    <rect x="750" y="282" width="200" height="40" rx="20" fill="none" stroke="#2a3346" stroke-width="1.5"/>
+    <text x="850" y="307" text-anchor="middle" fill="#8fd8f7">--json</text>
+    <rect x="530" y="334" width="140" height="34" rx="17" fill="#1f2c41"/>
+    <text x="600" y="356" text-anchor="middle" fill="#7ee7d3">--fix</text>
+  </g>
+</svg>

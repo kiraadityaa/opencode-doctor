@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# Stub `agent-browser` used by tests so g05 (mcp command on PATH) stays green.
+echo "agent-browser (test stub)"

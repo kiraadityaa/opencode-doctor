@@ -1,0 +1,20 @@
+{
+  // Fixture: fully healthy global setup.
+  // Every check that applies here must pass with no warnings.
+  "model": "anthropic/claude-3.5-sonnet",
+  "small_model": "anthropic/claude-3.5-haiku",
+  "permission": {
+    "bash": {
+      "*": "ask",
+      "rm -rf *": "deny",
+      "git push --force*": "deny"
+    }
+  },
+  "mcp": {
+    "demo": {
+      "type": "remote",
+      "url": "https://mcp.example.com/mcp",
+      "enabled": true
+    }
+  }
+}

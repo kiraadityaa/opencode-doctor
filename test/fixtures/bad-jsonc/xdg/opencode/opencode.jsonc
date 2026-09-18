@@ -1,0 +1,7 @@
+{
+  "model": "anthropic/claude-3.5-sonnet",
+  "small_model": "anthropic/claude-3.5-haiku",
+  // Bad JSONC: this block is never closed — json.tool must reject it.
+  "permission": {
+    "bash": {
+      "*": "ask",

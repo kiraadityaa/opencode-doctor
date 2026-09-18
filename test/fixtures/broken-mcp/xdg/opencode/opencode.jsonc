@@ -1,0 +1,24 @@
+{
+  "model": "anthropic/claude-3.5-sonnet",
+  "small_model": "anthropic/claude-3.5-haiku",
+  "permission": {
+    "bash": {
+      "*": "ask"
+    }
+  },
+  // Fixture: "brokenserver" is enabled but the (fake) mcp list reports it
+  // disconnected via the "x-doctor-test": "offline" marker → g06 must WARN.
+  "mcp": {
+    "healthy-server": {
+      "type": "remote",
+      "url": "https://mcp.example.com/mcp",
+      "enabled": true
+    },
+    "brokenserver": {
+      "type": "remote",
+      "url": "https://mcp.broken.example.com",
+      "enabled": true,
+      "x-doctor-test": "offline"
+    }
+  }
+}

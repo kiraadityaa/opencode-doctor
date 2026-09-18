@@ -1,0 +1,39 @@
+name: Feature request
+description: Suggest an improvement or new capability
+title: "feat: "
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Ideas are welcome. Describe the problem and your proposed solution.
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does this solve?
+      description: Be specific about the pain point.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: How should opencode-doctor change?
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: What else have you tried or considered?
+  - type: checkboxes
+    id: component
+    attributes:
+      label: Affected area
+      options:
+        - label: doctor.sh (health checks / logic)
+        - label: --fix / --dry-run repairs
+        - label: JSON report output
+        - label: test suite / fixtures
+        - label: Documentation / README
+        - label: CI / releases
