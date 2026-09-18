@@ -7,6 +7,7 @@ set -u
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 DOCTOR="$ROOT/doctor.sh"
 FIXTURES="$ROOT/test/fixtures"
+# shellcheck disable=SC2034
 CASE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CASE_NAME="$(basename "${BASH_SOURCE[0]}" .sh)"
 
@@ -42,20 +43,27 @@ fixture_home() { # $1 fixture name
   local name="$1"
   scratch
   cp -r "$FIXTURES/$name/xdg/." "$XDG_CONFIG_HOME/"
+  # shellcheck disable=SC2034
   FIX_DIR="$FIXTURES/$name"
 }
 
+backup_count() { # count .doctor.bak.* backups next to a config dir
+  local n=0 f
+  for f in "$XDG_CONFIG_HOME/opencode"/*.doctor.bak.*; do
+    [ -e "$f" ] && n=$((n + 1))
+  done
+  printf '%s' "$n"
+}
+
 run_doctor() {
-  # shellcheck disable=SC2086
-  "$DOCTOR" $* --offline 2> "$SCRATCH/doctor.stderr"
+  "$DOCTOR" "$@" --offline 2> "$SCRATCH/doctor.stderr"
   RC=$?
   return $RC
 }
 
 run_doctor_json() {
   # $@: flags (without --json). Parses output, stores in OUT.
-  # shellcheck disable=SC2086
-  OUT="$("$DOCTOR" --json $* --offline 2> "$SCRATCH/doctor.stderr")"
+  OUT="$("$DOCTOR" --json "$@" --offline 2> "$SCRATCH/doctor.stderr")"
   RC=$?
   printf '%s' "$OUT" | python3 -m json.tool > /dev/null 2>&1 || {
     echo "FAIL: --json output is not valid JSON"

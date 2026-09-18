@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Healthy fixture: everything that applies must be OK, exit code 0.
 set -u
+# shellcheck disable=SC1091
 source "$(dirname "${BASH_SOURCE[0]}")/../lib.sh"
 
 fixture_home healthy
